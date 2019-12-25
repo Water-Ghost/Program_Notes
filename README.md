@@ -2,17 +2,12 @@
 ## Contents
 - [Python Notes](#python-notes)
   - [Contents](#contents)
-  - [<ul>
-<li>Matplotlib</li>
-</ul>](#ullimatplotlibliul)
+  - [1 Matplotlib](#1-matplotlib)
     - [Self-define colormap](#self-define-colormap)
-  - [<ul>
-<li>Others</li>
-</ul>](#ulliothersliul)
-<li>Others</li>
-</ul>](#ulliothersliul)
+  - [2 Others](#2-others)
+  - [3 Others](#3-others)
 
-## * Matplotlib
+## 1 Matplotlib
 ### Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
@@ -48,4 +43,7 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-## * Others
+## 2 Others
+
+
+## 3 Others
