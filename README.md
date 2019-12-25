@@ -1,12 +1,18 @@
 # Python Notes
 ## Contents
-
 - [Python Notes](#python-notes)
   - [Contents](#contents)
-  - [Matplotlib](#matplotlib)
+  - [<ul>
+<li>Matplotlib</li>
+</ul>](#ullimatplotlibliul)
     - [Self-define colormap](#self-define-colormap)
+  - [<ul>
+<li>Others</li>
+</ul>](#ulliothersliul)
+<li>Others</li>
+</ul>](#ulliothersliul)
 
-## Matplotlib
+## * Matplotlib
 ### Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
@@ -32,10 +38,14 @@ colors_ = [[norm(0), "#FFFFFF"],  # 白色
            [norm(0.4), "#FF1493"],  # 深粉红
            [norm(1), "#FF8C00"]]  # 深橙色
 
+# 创建名称为“rain_fall”的colormap
 _cmap = col.LinearSegmentedColormap.from_list("rain_fall", colors_)
 _cmap.set_over('#8B0000')  # 深红色
 _cmap.set_under("#FFFFFF")  # 白色
+# 注册“rain_fall”到matplotlib.cm，然后绘图就可以指定cmap=“rain_fall”
 cm.register_cmap(cmap=_cmap)
 
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
+
+## * Others
