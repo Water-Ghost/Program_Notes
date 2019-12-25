@@ -1,4 +1,15 @@
-# Matplotlib_self-define_colormap
+# Python Notes
+## Contents
+
+- [Python Notes](#python-notes)
+  - [Contents](#contents)
+  - [Matplotlib](#matplotlib)
+    - [Self-define colormap](#self-define-colormap)
+
+## Matplotlib
+### Self-define colormap
+
+有时候，你需要自定义colormap，自定义代码如下：  
 ```python
 # -*- coding: utf-8 -*-
 """
