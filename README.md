@@ -6,7 +6,8 @@
   - [1.1. Contents](#11-contents)
   - [1.2. Matplotlib](#12-matplotlib)
     - [1.2.1. Self-define colormap](#121-self-define-colormap)
-  - [1.3. Others](#13-others)
+  - [1.3. Numpy](#13-numpy)
+    - [1.3.1. Clip data with shp, and save it to npz](#131-clip-data-with-shp-and-save-it-to-npz)
   - [1.4. Others](#14-others)
 
 ## 1.2. Matplotlib
@@ -47,7 +48,128 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-## 1.3. Others
+## 1.3. Numpy
 
+### 1.3.1. Clip data with shp, and save it to npz
+
+```python
+# -*- coding: utf-8 -*-
+"""
+@author: Ghost
+"""
+import geopandas as gpd
+import netCDF4 as nc
+import numpy as np
+import sys
+
+from datetime import datetime, timedelta
+
+
+def get_clip_data(boundary, variables):
+    """
+    Get clip area data(limit by boundary) from variables.
+    Args:
+        boundary: (minlon, minlat, maxlon, maxlat),
+            tyepes:(float, float, float, float);
+            clip boundary of data.
+        variables: list of np.array, [lon, lat, var1, var2, ...].
+    Return:
+        variables_cut: list of np.array. [lon_cut, lat_cut, var1_cut, ...]
+    """
+    lon, lat, *_ = variables
+    minlon, minlat, maxlon, maxlat = boundary
+    lonmin = minlon // 1 - 1
+    lonmax = maxlon // 1 + 1
+    latmin = minlat // 1 - 1
+    latmax = maxlat // 1 + 1
+    limit = np.where((lon > lonmin) &
+                     (lon < lonmax) &
+                     (lat > latmin) &
+                     (lat < latmax))
+    len0 = len(set(limit[0]))
+    len1 = len(set(limit[1]))
+    print(len0, len1)
+    variables_cut = [var[limit].reshape(len0, len1) for var in variables]
+    return variables_cut
+
+
+def get_boundary_from_shp(shp_path):
+    """Get (minlon, minlat, maxlon, maxlat) from shp_file.
+
+    Parameters:
+        shp_path.
+    Return:
+        tuple: (minlon, minlat, maxlon, maxlat)
+    """
+    shp_file = '{}.shp'.format(shp_path)
+    _df = gpd.GeoDataFrame.from_file(shp_file)
+    bounds = _df.bounds
+    minlon = bounds.minx.min()
+    minlat = bounds.miny.min()
+    maxlon = bounds.maxx.max()
+    maxlat = bounds.maxy.max()
+    return minlon, minlat, maxlon, maxlat
+
+
+def main(time):
+    '''
+    Extract met variables, turn them to npy, pkl and csv.
+
+    Args:
+        time: datetime object.
+
+    Return:
+        No return, files will be saved.
+    '''
+    # 0 Generate input and output path
+    time_str = time.strftime('%Y%m%d%H')
+    nc_dir = '/path/of/ncfile_dir'
+    nc_path = f'{nc_dir}/{time_str}.nc'
+    out_dir = '/path/of/outdir'
+    out_path = f'{out_dir}/{time_str}.npy'
+    shp_path = './shp/china'
+    # 1 Get data
+    nc_data = nc.Dataset(nc_path)
+    var_names = ['longitude', 'latitude',
+                 'UGRD_10maboveground', 'VGRD_10maboveground']
+    # you can also add other names.
+    var_units = ['°', '°',
+                 'm/s', 'm/s',]
+    # crresponded units.
+    variables_ori = [nc_data.variables[var_name][:] for var_name in var_names]
+    lon, lat, *met_vars = variables_ori
+    lont, latt = np.meshgrid(lon, lat)
+    variables = [lont, latt]
+    for _ in met_vars:
+        variables.append(_[0])
+    # clip data.
+    boundary = get_boundary_from_shp(shp_path)
+    variables_cut = get_clip_data(boundary, variables)
+    # lon_cut, lat_cut, *met_vars_cut = variables_cut
+    np.savez(out_path,
+             data=variables_cut,
+             var_names=var_names,
+             var_units=var_units
+             )
+
+
+if __name__ == "__main__":
+    try:
+        if len(sys.argv) == 1:
+            print("No args received, current time will be used.")
+            time = datetime.now()
+            main(time)
+        elif len(sys.argv) != 3:
+            print("Timestr and num needed, format '%Y%m%d%H' and 'int'.")
+        else:
+            print(len(sys.argv))
+            time = datetime.strptime(sys.argv[1], '%Y%m%d%H')
+            num = int(sys.argv[2])
+            for i in range(num):
+                main(time)
+                time += timedelta(hours=+1)
+    except (IOError, KeyboardInterrupt):
+        raise
+```
 
 ## 1.4. Others
