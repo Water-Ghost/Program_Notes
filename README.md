@@ -135,7 +135,7 @@ def main(time):
     # you can also add other names.
     var_units = ['°', '°',
                  'm/s', 'm/s',]
-    # crresponded units.
+    # Corresponding  units.
     variables_ori = [nc_data.variables[var_name][:] for var_name in var_names]
     lon, lat, *met_vars = variables_ori
     lont, latt = np.meshgrid(lon, lat)
