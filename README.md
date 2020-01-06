@@ -1,18 +1,20 @@
-# Program Notes
+# 1. Program Notes
 
-## 1. Contents
+## 1.1. Contents
 
-- [Program Notes](#program-notes)
-  - [1. Contents](#1-contents)
-  - [2. Python Notes](#2-python-notes)
-    - [2.1. Self-define colormap](#21-self-define-colormap)
-    - [2.2. Clip data with shp, and save it to npz](#22-clip-data-with-shp-and-save-it-to-npz)
-  - [3. Shell notes](#3-shell-notes)
-    - [3.1. create list with fixed digits](#31-create-list-with-fixed-digits)
+- [1. Program Notes](#1-program-notes)
+  - [1.1. Contents](#11-contents)
+  - [1.2. Python Notes](#12-python-notes)
+    - [1.2.1. Self-define colormap](#121-self-define-colormap)
+    - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
+  - [1.3. Shell notes](#13-shell-notes)
+    - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
+  - [1.4. Meteorology](#14-meteorology)
+    - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
 
-## 2. Python Notes
+## 1.2. Python Notes
 
-### 2.1. Self-define colormap
+### 1.2.1. Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
 
@@ -48,7 +50,7 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-### 2.2. Clip data with shp, and save it to npz
+### 1.2.2. Clip data with shp, and save it to npz
 
 ```python
 # -*- coding: utf-8 -*-
@@ -170,9 +172,9 @@ if __name__ == "__main__":
         raise
 ```
 
-## 3. Shell notes
+## 1.3. Shell notes
 
-### 3.1. create list with fixed digits
+### 1.3.1. Create list with fixed digits
 
 ```shell
 #!/bin/bash
@@ -181,4 +183,24 @@ for i in `seq 0 1 24`
 do
     echo `printf "%03d" "$i"`
 done
+```
+
+## 1.4. Meteorology
+
+### 1.4.1. Turn grib2 to nc with wgrib2
+
+```shell
+# Assumed that wgrib2 had been installed.
+
+# 1 Generate vars
+vars="(:RH:2 m ab|:TMP:2 m ab|:APCP:surface:|:DSWRF:surface|:PRES:surface|:DLWRF:surface|:PEVPR:surface|:HPBL:surface|:UGRD:10 m above|:VGRD:10 m above|:TMP:850 mb|:HGT:850 mb|:UGRD:850 mb|:VGRD:850 mb|:TMP:500 mb|:HGT:500 mb|:RH:850 mb:|:VVEL:0.995 sigma level:)"
+
+# 2 Extract vars and turn to nc
+# input
+gfs_dir="/gfs/dir"
+gfs_name="gfs.t00z.pgrb2.0p25.f040"
+# output
+out_dir="/out/dir"
+nc_name="2019010100"
+wgrib2 ${gfs_dir}/${gfs_name}.grb -s | egrep "`echo $vars`" | wgrib2 -i ${gfs_dir}/${gfs_name}.grb -netcdf ${out_dir}/${nc_name}.nc
 ```
