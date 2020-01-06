@@ -1,19 +1,18 @@
-# 1. Python Notes
+# Program Notes
 
-## 1.1. Contents
+## 1. Contents
 
-- [1. Python Notes](#1-python-notes)
-  - [1.1. Contents](#11-contents)
-  - [1.2. Matplotlib](#12-matplotlib)
-    - [1.2.1. Self-define colormap](#121-self-define-colormap)
-  - [1.3. Numpy](#13-numpy)
-    - [1.3.1. Clip data with shp, and save it to npz](#131-clip-data-with-shp-and-save-it-to-npz)
-- [2. Shell notes](#2-shell-notes)
-  - [2.1. create list with fixed digits](#21-create-list-with-fixed-digits)
+- [Program Notes](#program-notes)
+  - [1. Contents](#1-contents)
+  - [2. Python Notes](#2-python-notes)
+    - [2.1.1. Self-define colormap](#211-self-define-colormap)
+    - [2.2.1. Clip data with shp, and save it to npz](#221-clip-data-with-shp-and-save-it-to-npz)
+  - [3. Shell notes](#3-shell-notes)
+    - [3.1. create list with fixed digits](#31-create-list-with-fixed-digits)
 
-## 1.2. Matplotlib
+## 2. Python Notes
 
-### 1.2.1. Self-define colormap
+### 2.1.1. Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
 
@@ -49,9 +48,7 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-## 1.3. Numpy
-
-### 1.3.1. Clip data with shp, and save it to npz
+### 2.2.1. Clip data with shp, and save it to npz
 
 ```python
 # -*- coding: utf-8 -*-
@@ -173,9 +170,9 @@ if __name__ == "__main__":
         raise
 ```
 
-# 2. Shell notes
+## 3. Shell notes
 
-## 2.1. create list with fixed digits
+### 3.1. create list with fixed digits
 
 ```shell
 #!/bin/bash
