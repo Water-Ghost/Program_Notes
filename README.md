@@ -8,7 +8,8 @@
     - [1.2.1. Self-define colormap](#121-self-define-colormap)
   - [1.3. Numpy](#13-numpy)
     - [1.3.1. Clip data with shp, and save it to npz](#131-clip-data-with-shp-and-save-it-to-npz)
-  - [1.4. Others](#14-others)
+- [2. Shell notes](#2-shell-notes)
+  - [2.1. create list with fixed digits](#21-create-list-with-fixed-digits)
 
 ## 1.2. Matplotlib
 
@@ -172,4 +173,15 @@ if __name__ == "__main__":
         raise
 ```
 
-## 1.4. Others
+# 2. Shell notes
+
+## 2.1. create list with fixed digits
+
+```shell
+#!/bin/bash
+
+for i in `seq 0 1 24`
+do
+    echo `printf "%03d" "$i"`
+done
+```
