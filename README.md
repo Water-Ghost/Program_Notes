@@ -190,6 +190,7 @@ done
 ### 1.4.1. Turn grib2 to nc with wgrib2
 
 ```shell
+#!/bin/bash
 # Assumed that wgrib2 had been installed.
 
 # 1 Generate vars
