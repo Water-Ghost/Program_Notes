@@ -5,14 +5,14 @@
 - [Program Notes](#program-notes)
   - [1. Contents](#1-contents)
   - [2. Python Notes](#2-python-notes)
-    - [2.1.1. Self-define colormap](#211-self-define-colormap)
-    - [2.2.1. Clip data with shp, and save it to npz](#221-clip-data-with-shp-and-save-it-to-npz)
+    - [2.1. Self-define colormap](#21-self-define-colormap)
+    - [2.2. Clip data with shp, and save it to npz](#22-clip-data-with-shp-and-save-it-to-npz)
   - [3. Shell notes](#3-shell-notes)
     - [3.1. create list with fixed digits](#31-create-list-with-fixed-digits)
 
 ## 2. Python Notes
 
-### 2.1.1. Self-define colormap
+### 2.1. Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
 
@@ -48,7 +48,7 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-### 2.2.1. Clip data with shp, and save it to npz
+### 2.2. Clip data with shp, and save it to npz
 
 ```python
 # -*- coding: utf-8 -*-
