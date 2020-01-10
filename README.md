@@ -7,11 +7,11 @@
   - [1.2. Python Notes](#12-python-notes)
     - [1.2.1. Self-define colormap](#121-self-define-colormap)
     - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
-    - [1.2.3. Cal frequencies of 16 wind directions](#123-cal-frequencies-of-16-wind-directions)
   - [1.3. Shell notes](#13-shell-notes)
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
   - [1.4. Meteorology](#14-meteorology)
     - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
+    - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
 
 ## 1.2. Python Notes
 
@@ -173,41 +173,6 @@ if __name__ == "__main__":
         raise
 ```
 
-### 1.2.3. Cal frequencies of 16 wind directions
-
-```python
-import numpy as np
-
-
-def cal_wd_freq(wd):
-    """
-    根据计算角度对风向数据进行16个风向风频统计
-
-    Args:
-        wd: np.array, wind angles.
-    Return:
-        wind_fs: list, frequencies of 16 directions.
-    """
-    # 1 求各风向个数
-    wind_f = [0] * 16  # 初始化风向频率
-    for value in wd:
-        # 判断数据风向，处于哪个风向，哪个风向频数+1
-        if ((value >= 0 and value < 11.25) or
-                (value >= 348.75 and value < 360)):
-            wind_f[0] += 1
-        else:
-            for m in range(15):
-                if (value >= (m + 1) * 22.5 - 11.25 and
-                        value < (m + 1) * 22.5 + 11.25):
-                    wind_f[m + 1] += 1
-    # 2 求风向频率
-    if sum(wind_f) == 0:
-        print("Sorry! Data was missed!")
-    else:
-        wind_fs = [value / sum(wind_f) for value in wind_f]
-    return wind_fs
-```
-
 ## 1.3. Shell notes
 
 ### 1.3.1. Create list with fixed digits
@@ -240,4 +205,39 @@ gfs_name="gfs.t00z.pgrb2.0p25.f040"
 out_dir="/out/dir"
 nc_name="2019010100"
 wgrib2 ${gfs_dir}/${gfs_name}.grb -s | egrep "`echo $vars`" | wgrib2 -i ${gfs_dir}/${gfs_name}.grb -netcdf ${out_dir}/${nc_name}.nc
+```
+
+### 1.4.2. Cal frequencies of 16 wind directions
+
+```python
+import numpy as np
+
+
+def cal_wd_freq(wd):
+    """
+    根据计算角度对风向数据进行16个风向风频统计
+
+    Args:
+        wd: np.array, wind angles.
+    Return:
+        wind_fs: list, frequencies of 16 directions.
+    """
+    # 1 求各风向个数
+    wind_f = [0] * 16  # 初始化风向频率
+    for value in wd:
+        # 判断数据风向，处于哪个风向，哪个风向频数+1
+        if ((value >= 0 and value < 11.25) or
+                (value >= 348.75 and value < 360)):
+            wind_f[0] += 1
+        else:
+            for m in range(15):
+                if (value >= (m + 1) * 22.5 - 11.25 and
+                        value < (m + 1) * 22.5 + 11.25):
+                    wind_f[m + 1] += 1
+    # 2 求风向频率
+    if sum(wind_f) == 0:
+        print("Sorry! Data was missed!")
+    else:
+        wind_fs = [value / sum(wind_f) for value in wind_f]
+    return wind_fs
 ```
