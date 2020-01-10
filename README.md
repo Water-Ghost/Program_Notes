@@ -7,7 +7,7 @@
   - [1.2. Python Notes](#12-python-notes)
     - [1.2.1. Self-define colormap](#121-self-define-colormap)
     - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
-    - [Cal frequencies of 16 wind directions](#cal-frequencies-of-16-wind-directions)
+    - [1.2.3. Cal frequencies of 16 wind directions](#123-cal-frequencies-of-16-wind-directions)
   - [1.3. Shell notes](#13-shell-notes)
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
   - [1.4. Meteorology](#14-meteorology)
@@ -173,7 +173,7 @@ if __name__ == "__main__":
         raise
 ```
 
-### Cal frequencies of 16 wind directions
+### 1.2.3. Cal frequencies of 16 wind directions
 
 ```python
 import numpy as np
