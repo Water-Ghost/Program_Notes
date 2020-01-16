@@ -9,6 +9,7 @@
     - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
   - [1.3. Shell notes](#13-shell-notes)
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
+    - [1.3.2. lrzsz install](#132-lrzsz-install)
   - [1.4. Meteorology](#14-meteorology)
     - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
     - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
@@ -184,6 +185,28 @@ for i in `seq 0 1 24`
 do
     echo `printf "%03d" "$i"`
 done
+```
+
+### 1.3.2. lrzsz install
+
+```shell
+# If you don't have sudo permission, you cann't "yum -y install epel-release".
+# epel include tools: screen, lrzsz, tree, locate, and htop.
+# Then, this is what you need.
+
+# 1 get the lrzsz.taz.gz file.
+# from "http://freshmeat.sourceforge.net/projects/lrzsz/" or other sources.
+tar -zxvf lrzsz-0.12.20.tar.gz
+cd lrzsz-0.12.20
+./configure --prefix=/your/path/lrzsz
+make && make install
+
+# 2 Don't forget to add lrzsz path to PATH.
+vi ~/.bashrc
+# add the following code to it.
+export PATH="/your/path/lrzsz/bin":$PATH
+alias rz="lrz"
+alias sz="lsz"
 ```
 
 ## 1.4. Meteorology
