@@ -209,6 +209,14 @@ alias rz="lrz"
 alias sz="lsz"
 ```
 
+### 1.3.3. shebang usage in python
+
+"shebang" has two kinds of usages.  
+First,  
+`#!/usr/bin/python3`  # use this interpreter  
+Second,  
+`#!/usr/bin/env python3` # use the first found python3 interpreter  
+
 ## 1.4. Meteorology
 
 ### 1.4.1. Turn grib2 to nc with wgrib2
