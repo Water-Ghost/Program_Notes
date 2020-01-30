@@ -10,6 +10,7 @@
   - [1.3. Shell notes](#13-shell-notes)
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
     - [1.3.2. lrzsz install](#132-lrzsz-install)
+    - [1.3.3. shebang usage in python](#133-shebang-usage-in-python)
   - [1.4. Meteorology](#14-meteorology)
     - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
     - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
