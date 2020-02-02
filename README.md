@@ -11,6 +11,7 @@
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
     - [1.3.2. lrzsz install](#132-lrzsz-install)
     - [1.3.3. shebang usage in python](#133-shebang-usage-in-python)
+    - [1.3.4. Built-in Exceptions](#134-built-in-exceptions)
   - [1.4. Meteorology](#14-meteorology)
     - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
     - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
@@ -217,6 +218,76 @@ First,
 `#!/usr/bin/python3`  # use this interpreter  
 Second,  
 `#!/usr/bin/env python3` # use the first found python3 interpreter  
+
+### 1.3.4. Built-in Exceptions
+
+```python
+BaseException
+ +-- SystemExit
+ +-- KeyboardInterrupt
+ +-- GeneratorExit
+ +-- Exception
+      +-- StopIteration
+      +-- StopAsyncIteration
+      +-- ArithmeticError
+      |    +-- FloatingPointError
+      |    +-- OverflowError
+      |    +-- ZeroDivisionError
+      +-- AssertionError
+      +-- AttributeError
+      +-- BufferError
+      +-- EOFError
+      +-- ImportError
+      |    +-- ModuleNotFoundError
+      +-- LookupError
+      |    +-- IndexError
+      |    +-- KeyError
+      +-- MemoryError
+      +-- NameError
+      |    +-- UnboundLocalError
+      +-- OSError
+      |    +-- BlockingIOError
+      |    +-- ChildProcessError
+      |    +-- ConnectionError
+      |    |    +-- BrokenPipeError
+      |    |    +-- ConnectionAbortedError
+      |    |    +-- ConnectionRefusedError
+      |    |    +-- ConnectionResetError
+      |    +-- FileExistsError
+      |    +-- FileNotFoundError
+      |    +-- InterruptedError
+      |    +-- IsADirectoryError
+      |    +-- NotADirectoryError
+      |    +-- PermissionError
+      |    +-- ProcessLookupError
+      |    +-- TimeoutError
+      +-- ReferenceError
+      +-- RuntimeError
+      |    +-- NotImplementedError
+      |    +-- RecursionError
+      +-- SyntaxError
+      |    +-- IndentationError
+      |         +-- TabError
+      +-- SystemError
+      +-- TypeError
+      +-- ValueError
+      |    +-- UnicodeError
+      |         +-- UnicodeDecodeError
+      |         +-- UnicodeEncodeError
+      |         +-- UnicodeTranslateError
+      +-- Warning
+           +-- DeprecationWarning
+           +-- PendingDeprecationWarning
+           +-- RuntimeWarning
+           +-- SyntaxWarning
+           +-- UserWarning
+           +-- FutureWarning
+           +-- ImportWarning
+           +-- UnicodeWarning
+           +-- BytesWarning
+           +-- ResourceWarning
+```
+
 
 ## 1.4. Meteorology
 
