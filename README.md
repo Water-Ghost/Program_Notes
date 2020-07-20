@@ -15,6 +15,9 @@
   - [1.4. Meteorology](#14-meteorology)
     - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
     - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
+  - [1.5. DataBase](#15-database)
+    - [1.5.1. Sqlite](#151-sqlite)
+      - [1.5.1.1. Create table unique in multuple columns](#1511-create-table-unique-in-multuple-columns)
 
 ## 1.2. Python Notes
 
@@ -343,4 +346,27 @@ def cal_wd_freq(wd):
     else:
         wind_fs = [value / sum(wind_f) for value in wind_f]
     return wind_fs
+```
+
+## 1.5. DataBase
+
+### 1.5.1. Sqlite
+#### 1.5.1.1. Create table unique in multuple columns
+```shell
+# Open sqlite database
+.sqlite3 <filename.db>
+
+# check tables
+$ .table
+
+# create table, unique in TIME and SITE
+$ CREATE TABLE <table_name> (ID interger primary key autoincrement,
+                             TIME date NOT NULL,
+                             SITE text NOT NULL, VALUE real,
+                             UNIQUE(TIME, SITE) ON CONFILICT REPLACE);
+
+# headers on
+.headers on
+
+
 ```
