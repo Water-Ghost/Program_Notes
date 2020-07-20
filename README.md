@@ -354,7 +354,7 @@ def cal_wd_freq(wd):
 #### 1.5.1.1. Create table unique in multuple columns
 ```shell
 # Open sqlite database
-.sqlite3 <filename.db>
+$ .sqlite3 <filename.db>
 
 # check tables
 $ .table
@@ -366,7 +366,7 @@ $ CREATE TABLE <table_name> (ID interger primary key autoincrement,
                              UNIQUE(TIME, SITE) ON CONFILICT REPLACE);
 
 # headers on
-.headers on
+$ .headers on
 
 
 ```
