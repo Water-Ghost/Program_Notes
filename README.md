@@ -7,6 +7,7 @@
   - [1.2. Python Notes](#12-python-notes)
     - [1.2.1. Self-define colormap](#121-self-define-colormap)
     - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
+    - [1.2.3. Get all files of a folder with os.walk](#123-get-all-files-of-a-folder-with-oswalk)
   - [1.3. Shell notes](#13-shell-notes)
     - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
     - [1.3.2. lrzsz install](#132-lrzsz-install)
@@ -178,6 +179,34 @@ if __name__ == "__main__":
     except (IOError, KeyboardInterrupt):
         raise
 ```
+
+### 1.2.3. Get all files of a folder with os.walk
+
+```python
+import os
+
+def get_files_of_dir(folder):
+    '''
+    Get all files of specified folder.
+
+    Parameters
+    ----------
+    folder : str.
+
+    Returns
+    -------
+    file_list : list of str, list of filepath.
+    '''
+    file_list = []
+    for root, _dir, files in os.walk(folder):
+        for file in files:
+            file_list.append(os.path.join(root, file))
+    return file_list
+
+folder = '/your/folder'
+file_list = _files_of_dir(folder)
+```
+
 
 ## 1.3. Shell notes
 
