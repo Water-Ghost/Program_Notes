@@ -19,6 +19,9 @@
   - [1.5. DataBase](#15-database)
     - [1.5.1. Sqlite](#151-sqlite)
       - [1.5.1.1. Create table unique in multuple columns](#1511-create-table-unique-in-multuple-columns)
+  - [1.6. Docker](#16-docker)
+    - [1.6.1. tldr docker](#161-tldr-docker)
+    - [1.6.2. Common cmd](#162-common-cmd)
 
 ## 1.2. Python Notes
 
@@ -399,3 +402,109 @@ $ .headers on
 
 
 ```
+
+## 1.6. Docker
+
+
+### 1.6.1. tldr docker
+
+- List currently running docker containers:
+    - `docker ps`
+
+- List all docker containers (running and stopped):
+    - `docker ps -a`
+
+- Start a container from an image, with a custom name:
+    - `docker run --name container_name image`
+
+- Start or stop an existing container:
+    - `docker start|stop container_name`
+
+- Pull an image from a docker registry:
+    - `docker pull image`
+
+- Open a shell inside of an already running container:
+    - `docker exec -it container_name sh`
+
+- Remove a stopped container:
+    - `docker rm container_name`
+
+- Fetch and follow the logs of a container:
+    - `docker logs -f container_name`
+
+
+### 1.6.2. Common cmd
+
+```shell
+# Create a container
+$ docker run -i -t ubuntu /bin/bash
+# -i 保证容器的STDIN是开启的，-t 告诉Docker为容器分配一个伪tty终端
+
+# Name a container
+$ docker run --name container_name -i -t ubuntu /bin/bash
+
+# update and install vim
+$ apt-get update && apt-get install vim
+
+# Restart a stoped container
+$ docker start container_name/id
+
+# Attach to a container
+$ docker attach container_name/id
+
+# Create a daemonized container
+$ docker run --name daemon_dave -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
+# -d Docker会将容器放到后台运行
+
+# Check the log
+$ docker logs daemon_dave
+$ docker logs -f daemon_dave  # 跟踪日志
+$ docker logs -ft daemon_dave  # 跟踪日志，并添加时间戳
+
+# Statistics
+$ docker top daemon_dave
+$ docker stats daemon_dave <others> ...
+
+# Execute tasks
+$ docker exec -d daemon_dave touch /etc/new_config_file
+# -d 表明需要运行一个后台进程
+
+# Execute a interactive cmd in a container
+$ docker exec -i -t daemon_dave /bin/bash
+
+# Stop a daemonized container
+$ docker stop daemon_dave/id
+
+# Check the last x container
+$ docker ps -n x
+
+# Create a auto start container
+$ docker run --restart=always --name daemon_dave -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+# Inspect 
+$ docker inspect daemon_dave
+
+# List the images
+$ docker images
+
+# Pull a image
+$ docker pull ubuntu:14.04
+
+# Create a container with a tag
+$ docker run -t -i --name new_container ubuntu:14:04 /bin/bash
+
+# Delete images
+$ docker rmi container_name/id
+
+# Search images
+$ docker search puppet
+
+# Pull a image
+$ docker pull ansible/centos7-ansible
+
+# Create a container
+$ docker run -i -t ansible/centos7-ansible /bin/bash
+
+```
+
+
