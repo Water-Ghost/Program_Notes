@@ -9,6 +9,10 @@
   - [3.2. Clip data with shp, and save it to npz](#32-clip-data-with-shp-and-save-it-to-npz)
   - [3.3. Get all files of a folder with os.walk](#33-get-all-files-of-a-folder-with-oswalk)
   - [3.4. Tests with pkgutils.get_data()](#34-tests-with-pkgutilsget_data)
+    - [3.4.1. Package](#341-package)
+    - [3.4.2. Codes](#342-codes)
+    - [3.4.3. Output](#343-output)
+    - [3.4.4. Discussions](#344-discussions)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -216,56 +220,100 @@ file_list = _files_of_dir(folder)
 
 根据官方文档、《python3标准库》、《python cookbook》和网上资料，测试发现均不能正确出结果，随自行测试`pkgutils.get_data`函数的使用方法。
 
-* Package
+### 3.4.1. Package
 
 Package structures are as follows: 
 
 ```shell
-pk
+.
 ├── __init__.py
 ├── data
 │   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-37.pyc
 │   ├── base.html
 │   └── t1
 │       └── test.csv
 ├── spam.py
-└── test2.csv
+├── test.py
+├── test2.csv
+└── test_.py
 ```
 
-* Codes
-    * spam.py
+### 3.4.2. Codes
+
+- spam.py
 
 ```python
 import pandas as pd
 import pkgutil
 import io
 
-# 正确返回结果
-print('-' * 20, 'Test 1', '-' * 20)
-base = pkgutil.get_data('data', 'base.html')
-print(base.decode('utf-8'))
+def test1():
+    # 正确返回结果
+    print('-' * 20, 'Test 1', '-' * 20)
+    base = pkgutil.get_data('data', 'base.html')
+    print(base.decode('utf-8'))
 
-# 正确返回结果，并读取csv数据
-print('-' * 20, 'Test 2', '-' * 20)
-csv = pkgutil.get_data('data', 't1/test.csv')
-print(csv.decode('utf-8'))
-print("\nRead data with pandas >>>")
-df = pd.read_csv(io.BytesIO(csv))
-print(df)
+def test2():
+    # 正确返回结果
+    print('-' * 20, 'Test 2', '-' * 20)
+    csv = pkgutil.get_data('data', 't1/test.csv')
+    print(csv.decode('utf-8'))
+    print("\nRead data with pandas >>>")
+    df = pd.read_csv(io.BytesIO(csv))
+    print(df)
 
-# 返回None
-print('-' * 20, 'Test 3', '-' * 20)
-csv = pkgutil.get_data('data.t1', 'test.csv')
-print(csv)
+def test3():
+    # 返回None
+    print('-' * 20, 'Test 3', '-' * 20)
+    csv = pkgutil.get_data('data.t1', 'test.csv')
+    print(csv)
 
-# 返回None
-print('-' * 20, 'Test 4', '-' * 20)
-csv2 = pkgutil.get_data('pk', 'test2.csv')
-print(csv2)  
+def test4():
+    # 返回None
+    print('-' * 20, 'Test 4', '-' * 20)
+    csv2 = pkgutil.get_data('pk', 'test2.csv')
+    print(csv2)  
+
+def test5():
+    # 正确返回结果
+    print('-' * 20, 'Test 5', '-' * 20)
+    csv3 = pkgutil.get_data('spam', 'test2.csv')
+    print(csv3.decode('utf-8'))
+
+def test6():
+    # 正确返回结果
+    print('-' * 20, 'Test 6', '-' * 20)
+    csv4 = pkgutil.get_data('test', 'test2.csv')
+    print(csv4.decode('utf-8'))
+
+def test7():
+    # 正确返回结果
+    print('-' * 20, 'Test 7', '-' * 20)
+    csv5 = pkgutil.get_data('test_', 'test2.csv')
+    print(csv5.decode('utf-8'))
+
+test1()
+test2()
+test3()
+test4()
+test5()
+test6()
+test7()
+
 ```
 
+- test.py
 
-* Output
+```
+print("This is test")
+
+```
+
+- test_.py (emtpy)
+
+### 3.4.3. Output
 
 ```html
 $ python spam.py 
@@ -294,7 +342,65 @@ Read data with pandas >>>
 None
 -------------------- Test 4 --------------------
 None
+-------------------- Test 5 --------------------
+-------------------- Test 1 --------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+-------------------- Test 2 --------------------
+name, age
+jack, 1444
+kim, 20
+
+Read data with pandas >>>
+   name   age
+0  jack  1444
+1   kim    20
+-------------------- Test 3 --------------------
+None
+-------------------- Test 4 --------------------
+None
+-------------------- Test 5 --------------------
+key, value
+name, jacks
+age, 23
+-------------------- Test 6 --------------------
+This is test
+key, value
+name, jacks
+age, 23
+-------------------- Test 7 --------------------
+key, value
+name, jacks
+age, 23
+key, value
+name, jacks
+age, 23
+-------------------- Test 6 --------------------
+key, value
+name, jacks
+age, 23
+-------------------- Test 7 --------------------
+key, value
+name, jacks
+age, 23
 ```
+
+### 3.4.4. Discussions
+
+From the output, when run to `test5()`, the code restart run from `test1()` to `test7()`. And "This is test" should not be shown here, it was the result of `test.py`. Finally, the results of `test5()`, `test6()` and `test7()` was shown last.
+
+Because, in `test5()` and `test6()`, when using `pkgutil.get_data()` they refered to `spam.py` and `test.py`. They are files not dirctory, and are not empty. 
+
+The best solution is put your data to a sub dirctory, with a `__init__.py` in it.
 
 # 4. Shell
 
