@@ -1,31 +1,33 @@
 # 1. Program Notes
 
-## 1.1. Contents
+# 2. Contents
 
 - [1. Program Notes](#1-program-notes)
-  - [1.1. Contents](#11-contents)
-  - [1.2. Python Notes](#12-python-notes)
-    - [1.2.1. Self-define colormap](#121-self-define-colormap)
-    - [1.2.2. Clip data with shp, and save it to npz](#122-clip-data-with-shp-and-save-it-to-npz)
-    - [1.2.3. Get all files of a folder with os.walk](#123-get-all-files-of-a-folder-with-oswalk)
-  - [1.3. Shell notes](#13-shell-notes)
-    - [1.3.1. Create list with fixed digits](#131-create-list-with-fixed-digits)
-    - [1.3.2. lrzsz install](#132-lrzsz-install)
-    - [1.3.3. shebang usage in python](#133-shebang-usage-in-python)
-    - [1.3.4. Built-in Exceptions](#134-built-in-exceptions)
-  - [1.4. Meteorology](#14-meteorology)
-    - [1.4.1. Turn grib2 to nc with wgrib2](#141-turn-grib2-to-nc-with-wgrib2)
-    - [1.4.2. Cal frequencies of 16 wind directions](#142-cal-frequencies-of-16-wind-directions)
-  - [1.5. DataBase](#15-database)
-    - [1.5.1. Sqlite](#151-sqlite)
-      - [1.5.1.1. Create table unique in multuple columns](#1511-create-table-unique-in-multuple-columns)
-  - [1.6. Docker](#16-docker)
-    - [1.6.1. tldr docker](#161-tldr-docker)
-    - [1.6.2. Common cmd](#162-common-cmd)
+- [2. Contents](#2-contents)
+- [3. Python](#3-python)
+  - [3.1. Self-define colormap](#31-self-define-colormap)
+  - [3.2. Clip data with shp, and save it to npz](#32-clip-data-with-shp-and-save-it-to-npz)
+  - [3.3. Get all files of a folder with os.walk](#33-get-all-files-of-a-folder-with-oswalk)
+  - [3.4. Tests with pkgutils.get_data()](#34-tests-with-pkgutilsget_data)
+- [4. Shell](#4-shell)
+  - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
+  - [4.2. lrzsz install](#42-lrzsz-install)
+  - [4.3. shebang usage in python](#43-shebang-usage-in-python)
+  - [4.4. Built-in Exceptions](#44-built-in-exceptions)
+- [5. Meteorology](#5-meteorology)
+  - [5.1. Turn grib2 to nc with wgrib2](#51-turn-grib2-to-nc-with-wgrib2)
+  - [5.2. Cal frequencies of 16 wind directions](#52-cal-frequencies-of-16-wind-directions)
+- [6. DataBase](#6-database)
+  - [6.1. Sqlite](#61-sqlite)
+    - [6.1.1. Create table unique in multuple columns](#611-create-table-unique-in-multuple-columns)
+- [7. Docker](#7-docker)
+  - [7.1. tldr docker](#71-tldr-docker)
+  - [7.2. Common cmd](#72-common-cmd)
+  - [7.3. Working with docker file](#73-working-with-docker-file)
 
-## 1.2. Python Notes
+# 3. Python
 
-### 1.2.1. Self-define colormap
+## 3.1. Self-define colormap
 
 有时候，你需要自定义colormap，自定义代码如下：  
 
@@ -61,7 +63,7 @@ cm.register_cmap(cmap=_cmap)
 #levels = MaxNLocator(nbins=50).tick_values(0, 50)
 ```
 
-### 1.2.2. Clip data with shp, and save it to npz
+## 3.2. Clip data with shp, and save it to npz
 
 ```python
 # -*- coding: utf-8 -*-
@@ -183,7 +185,7 @@ if __name__ == "__main__":
         raise
 ```
 
-### 1.2.3. Get all files of a folder with os.walk
+## 3.3. Get all files of a folder with os.walk
 
 ```python
 import os
@@ -210,10 +212,93 @@ folder = '/your/folder'
 file_list = _files_of_dir(folder)
 ```
 
+## 3.4. Tests with pkgutils.get_data()
 
-## 1.3. Shell notes
+根据官方文档、《python3标准库》、《python cookbook》和网上资料，测试发现均不能正确出结果，随自行测试`pkgutils.get_data`函数的使用方法。
 
-### 1.3.1. Create list with fixed digits
+* Package
+
+Package structures are as follows: 
+
+```shell
+pk
+├── __init__.py
+├── data
+│   ├── __init__.py
+│   ├── base.html
+│   └── t1
+│       └── test.csv
+├── spam.py
+└── test2.csv
+```
+
+* Codes
+    * spam.py
+
+```python
+import pandas as pd
+import pkgutil
+import io
+
+# 正确返回结果
+print('-' * 20, 'Test 1', '-' * 20)
+base = pkgutil.get_data('data', 'base.html')
+print(base.decode('utf-8'))
+
+# 正确返回结果，并读取csv数据
+print('-' * 20, 'Test 2', '-' * 20)
+csv = pkgutil.get_data('data', 't1/test.csv')
+print(csv.decode('utf-8'))
+print("\nRead data with pandas >>>")
+df = pd.read_csv(io.BytesIO(csv))
+print(df)
+
+# 返回None
+print('-' * 20, 'Test 3', '-' * 20)
+csv = pkgutil.get_data('data.t1', 'test.csv')
+print(csv)
+
+# 返回None
+print('-' * 20, 'Test 4', '-' * 20)
+csv2 = pkgutil.get_data('pk', 'test2.csv')
+print(csv2)  
+```
+
+
+* Output
+
+```html
+$ python spam.py 
+-------------------- Test 1 --------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+-------------------- Test 2 --------------------
+name, age
+jack, 1444
+kim, 20
+
+Read data with pandas >>>
+   name   age
+0  jack  1444
+1   kim    20
+-------------------- Test 3 --------------------
+None
+-------------------- Test 4 --------------------
+None
+```
+
+# 4. Shell
+
+## 4.1. Create list with fixed digits
 
 ```shell
 #!/bin/bash
@@ -224,7 +309,7 @@ do
 done
 ```
 
-### 1.3.2. lrzsz install
+## 4.2. lrzsz install
 
 ```shell
 # If you don't have sudo permission, you cann't "yum -y install epel-release".
@@ -246,7 +331,7 @@ alias rz="lrz"
 alias sz="lsz"
 ```
 
-### 1.3.3. shebang usage in python
+## 4.3. shebang usage in python
 
 "shebang" has two kinds of usages.  
 First,  
@@ -254,7 +339,7 @@ First,
 Second,  
 `#!/usr/bin/env python3` # use the first found python3 interpreter  
 
-### 1.3.4. Built-in Exceptions
+## 4.4. Built-in Exceptions
 
 ```python
 BaseException
@@ -324,9 +409,9 @@ BaseException
 ```
 
 
-## 1.4. Meteorology
+# 5. Meteorology
 
-### 1.4.1. Turn grib2 to nc with wgrib2
+## 5.1. Turn grib2 to nc with wgrib2
 
 ```shell
 #!/bin/bash
@@ -345,7 +430,7 @@ nc_name="2019010100"
 wgrib2 ${gfs_dir}/${gfs_name}.grb -s | egrep "`echo $vars`" | wgrib2 -i ${gfs_dir}/${gfs_name}.grb -netcdf ${out_dir}/${nc_name}.nc
 ```
 
-### 1.4.2. Cal frequencies of 16 wind directions
+## 5.2. Cal frequencies of 16 wind directions
 
 ```python
 import numpy as np
@@ -380,10 +465,10 @@ def cal_wd_freq(wd):
     return wind_fs
 ```
 
-## 1.5. DataBase
+# 6. DataBase
 
-### 1.5.1. Sqlite
-#### 1.5.1.1. Create table unique in multuple columns
+## 6.1. Sqlite
+### 6.1.1. Create table unique in multuple columns
 ```shell
 # Open sqlite database
 $ .sqlite3 <filename.db>
@@ -400,13 +485,11 @@ $ CREATE TABLE <table_name> (ID interger primary key autoincrement,
 # headers on
 $ .headers on
 
-
 ```
 
-## 1.6. Docker
+# 7. Docker
 
-
-### 1.6.1. tldr docker
+## 7.1. tldr docker
 
 - List currently running docker containers:
     - `docker ps`
@@ -433,7 +516,7 @@ $ .headers on
     - `docker logs -f container_name`
 
 
-### 1.6.2. Common cmd
+## 7.2. Common cmd
 
 ```shell
 # Create a container
@@ -448,6 +531,12 @@ $ apt-get update && apt-get install vim
 
 # Restart a stoped container
 $ docker start container_name/id
+
+# Delete a container
+$ docker rm --force contain_name/id
+
+# Delete a contianer and its volume
+$ docker rm -v contain_name
 
 # Attach to a container
 $ docker attach container_name/id
@@ -493,7 +582,7 @@ $ docker pull ubuntu:14.04
 # Create a container with a tag
 $ docker run -t -i --name new_container ubuntu:14:04 /bin/bash
 
-# Delete images
+# Delete images, you can delete it if only the correspond container not exists.
 $ docker rmi container_name/id
 
 # Search images
@@ -505,6 +594,34 @@ $ docker pull ansible/centos7-ansible
 # Create a container
 $ docker run -i -t ansible/centos7-ansible /bin/bash
 
+# Create a container with nginx
+$ docker run -d --name web container_nginx nginx -g "daemon off;"
+# container_nginx 是带有nginx的容器
+
 ```
+
+
+## 7.3. Working with docker file
+
+* Dockerfile
+
+```docker
+# Version: 0.0.1
+FROM ubuntu:14.04
+LABEL maintainer="zyz" mail='test@test.com'
+VOLUME [ "/data" ]
+RUN mkdir /work
+WORKDIR /work
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y wget
+
+# Download miniconda.sh and install
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    -O /work/miniconda.sh
+RUN /bin/bash /work/miniconda.sh -b -p /work/miniconda && rm /work/miniconda.sh
+RUN echo "export PATH=/work/miniconda/bin:$PATH" >> ~/.bashrc
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+```
+
 
 
