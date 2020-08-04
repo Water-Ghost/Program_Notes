@@ -229,8 +229,6 @@ Package structures are as follows:
 ├── __init__.py
 ├── data
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   └── __init__.cpython-37.pyc
 │   ├── base.html
 │   └── t1
 │       └── test.csv
