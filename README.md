@@ -225,7 +225,7 @@ file_list = _files_of_dir(folder)
 Package structures are as follows: 
 
 ```shell
-.
+pk
 ├── __init__.py
 ├── data
 │   ├── __init__.py
@@ -398,7 +398,7 @@ From the output, when run to `test5()`, the code restart run from `test1()` to `
 
 Because, in `test5()` and `test6()`, when using `pkgutil.get_data()` they refered to `spam.py` and `test.py`. They are files not dirctory, and are not empty. 
 
-The best solution is put your data to a sub dirctory, with a `__init__.py` in it.
+The best solution is put your data to a sub dirctory, with a `__init__.py` in it. And we can see, the outer directory name, `pk`, is irrelevant.
 
 # 4. Shell
 
