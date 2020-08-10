@@ -28,6 +28,8 @@
   - [7.1. tldr docker](#71-tldr-docker)
   - [7.2. Common cmd](#72-common-cmd)
   - [7.3. Working with docker file](#73-working-with-docker-file)
+- [8. Airflow](#8-airflow)
+  - [8.1. CMD](#81-cmd)
 
 # 3. Python
 
@@ -727,5 +729,43 @@ RUN echo "export PATH=/work/miniconda/bin:$PATH" >> ~/.bashrc
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ```
 
+# 8. Airflow
 
+## 8.1. CMD
+
+- Command Line Metadata Validation
+
+```bash
+# print the list of active DAGs
+airflow list_dags
+
+# prints the list of tasks the "tutorial" dag_id
+airflow list_tasks tutorial
+
+# prints the hierarchy of tasks in the tutorial DAG
+airflow list_tasks tutorial --tree
+```
+
+- Testing
+
+```python
+# command layout: command subcommand dag_id task_id date
+
+# testing print_date
+airflow test tutorial print_date 2015-06-01
+
+# testing sleep
+airflow test tutorial sleep 2015-06-01
+```
+
+- Backfill
+
+```python
+# optional, start a web server in debug mode in the background
+# airflow webserver --debug &
+
+# start your backfill on a date range
+airflow backfill tutorial -s 2015-06-01 -e 2015-06-07
+
+```
 
