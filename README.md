@@ -13,6 +13,7 @@
     - [3.4.2. Codes](#342-codes)
     - [3.4.3. Output](#343-output)
     - [3.4.4. Discussions](#344-discussions)
+  - [3.5. Get abs path of package](#35-get-abs-path-of-package)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -401,6 +402,16 @@ From the output, when run to `test5()`, the code restart run from `test1()` to `
 Because, in `test5()` and `test6()`, when using `pkgutil.get_data()` they refered to `spam.py` and `test.py`. They are files not dirctory, and are not empty. 
 
 The best solution is put your data to a sub dirctory, with a `__init__.py` in it. And we can see, the outer directory name, `pk`, is irrelevant.
+
+## 3.5. Get abs path of package
+
+```python
+import os
+import numpy as np
+
+abs_dir = os.path.dirname(np.__file__)
+
+```
 
 # 4. Shell
 
