@@ -14,7 +14,7 @@
     - [3.4.3. Output](#343-output)
     - [3.4.4. Discussions](#344-discussions)
   - [3.5. Get abs path of package](#35-get-abs-path-of-package)
-    - [Dingding Robot with requests](#dingding-robot-with-requests)
+    - [3.5.1. Dingding Robot with requests](#351-dingding-robot-with-requests)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -414,7 +414,7 @@ abs_dir = os.path.dirname(np.__file__)
 
 ```
 
-### Dingding Robot with requests
+### 3.5.1. Dingding Robot with requests
 
 Auto sent message to Dingding Group, robot are secured with signature.
 
