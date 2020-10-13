@@ -14,6 +14,7 @@
     - [3.4.3. Output](#343-output)
     - [3.4.4. Discussions](#344-discussions)
   - [3.5. Get abs path of package](#35-get-abs-path-of-package)
+    - [Dingding Robot with requests](#dingding-robot-with-requests)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -412,6 +413,53 @@ import numpy as np
 abs_dir = os.path.dirname(np.__file__)
 
 ```
+
+### Dingding Robot with requests
+
+Auto sent message to Dingding Group, robot are secured with signature.
+
+```python
+import time
+import hmac
+import hashlib
+import base64
+import urllib.parse
+import requests
+import json
+
+# Generate timestamp and sign
+timestamp = str(round(time.time() * 1000))
+secret = 'Your secret key'
+secret_enc = secret.encode('utf-8')
+string_to_sign = '{}\n{}'.format(timestamp, secret)
+string_to_sign_enc = string_to_sign.encode('utf-8')
+hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
+sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
+
+# Define headers
+headers = {
+    'Content-Type': 'application/json',
+}
+# Define parameters
+params = (
+    ('access_token', 'your token'),
+    ('timestamp', f'{timestamp}'),
+    ('sign', sign),
+)
+# Define msg and jsonify the msg
+msg = "我就是我, 是不一样的烟火123"
+data = {"msgtype": "text", "text": {'content': msg}}
+data = json.dumps(data)
+
+# Send msg
+response = requests.post('https://oapi.dingtalk.com/robot/send', 
+                         headers=headers, 
+                         params=params,
+                         data=data)
+print(response.text)
+```
+
+
 
 # 4. Shell
 
