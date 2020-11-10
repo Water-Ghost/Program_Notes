@@ -32,6 +32,8 @@
   - [7.3. Working with docker file](#73-working-with-docker-file)
 - [8. Airflow](#8-airflow)
   - [8.1. CMD](#81-cmd)
+- [9. Javascript](#9-javascript)
+  - [9.1. Xpath](#91-xpath)
 
 # 3. Python
 
@@ -828,3 +830,20 @@ airflow backfill tutorial -s 2015-06-01 -e 2015-06-07
 
 ```
 
+# 9. Javascript
+
+## 9.1. Xpath
+
+- 根结点和非根结点
+  - /div 选择div节点，只有当它是文档的根结点时
+  - //div 选择文档中所有的div节点
+- 通过属性选择节点
+  - //@href 选择带href属性的所有节点
+  - //a[@href='http://google.com'] 选择页面中所有指向Google网站的链接
+- 通过位置选择节点
+  - //a[3] 选择文档中的第三个链接
+  - //table[last()] 选择文档中的最后一个表
+  - //a[postion() < 3] 选择文档中的前三个链接
+- 星号（*）匹配任意字符或节点，可以在不同条件下使用
+  - //table/tr/* 选择所有表格行tr标签的所有子节点
+  - //div[@*] 选择带任意属性的所有div标签
