@@ -22,7 +22,7 @@
   - [4.4. Built-in Exceptions](#44-built-in-exceptions)
 - [5. Meteorology](#5-meteorology)
   - [5.1. Turn grib2 to nc with wgrib2](#51-turn-grib2-to-nc-with-wgrib2)
-  - [5.2. Cal frequencies of 16 wind directions](#52-cal-frequencies-of-16-wind-directions)
+  - [5.2. Get wind direction name in Chinese](#52-get-wind-direction-name-in-chinese)
 - [6. DataBase](#6-database)
   - [6.1. Sqlite](#61-sqlite)
     - [6.1.1. Create table unique in multuple columns](#611-create-table-unique-in-multuple-columns)
@@ -597,39 +597,34 @@ nc_name="2019010100"
 wgrib2 ${gfs_dir}/${gfs_name}.grb -s | egrep "`echo $vars`" | wgrib2 -i ${gfs_dir}/${gfs_name}.grb -netcdf ${out_dir}/${nc_name}.nc
 ```
 
-## 5.2. Cal frequencies of 16 wind directions
+## 5.2. Get wind direction name in Chinese
 
 ```python
-import numpy as np
+
+def get_wind_direction(degree):
+    '''
+    Get wind direction name in Chinese of degree in wind.
+
+    Parameters
+    ----------
+    degree : int or float.
+        Wind direction, [0, 360].
+
+    Returns
+    -------
+    wd_CN : str
+        Wind direction name in Chinese.
+
+    '''
+    wds = ['北风', '东北风', '东风', '东南风',
+           '南风', '西南风', '西风', '西北风', '北风']
+    degrees = np.arange(22.5, 390, 45)
+    index = np.argwhere(degrees > degree)[0, 0]
+    # print(index)
+    wd_CN = wds[index]
+    return wd_CN
 
 
-def cal_wd_freq(wd):
-    """
-    根据计算角度对风向数据进行16个风向风频统计
-
-    Args:
-        wd: np.array, wind angles.
-    Return:
-        wind_fs: list, frequencies of 16 directions.
-    """
-    # 1 求各风向个数
-    wind_f = [0] * 16  # 初始化风向频率
-    for value in wd:
-        # 判断数据风向，处于哪个风向，哪个风向频数+1
-        if ((value >= 0 and value < 11.25) or
-                (value >= 348.75 and value < 360)):
-            wind_f[0] += 1
-        else:
-            for m in range(15):
-                if (value >= (m + 1) * 22.5 - 11.25 and
-                        value < (m + 1) * 22.5 + 11.25):
-                    wind_f[m + 1] += 1
-    # 2 求风向频率
-    if sum(wind_f) == 0:
-        print("Sorry! Data was missed!")
-    else:
-        wind_fs = [value / sum(wind_f) for value in wind_f]
-    return wind_fs
 ```
 
 # 6. DataBase
