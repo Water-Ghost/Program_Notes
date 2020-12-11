@@ -15,6 +15,7 @@
     - [3.4.4. Discussions](#344-discussions)
   - [3.5. Get abs path of package](#35-get-abs-path-of-package)
   - [3.6. Dingding Robot with requests](#36-dingding-robot-with-requests)
+  - [3.7. Decorator factory](#37-decorator-factory)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -461,6 +462,37 @@ response = requests.post('https://oapi.dingtalk.com/robot/send',
 print(response.text)
 ```
 
+## 3.7. Decorator factory
+
+The way to build a decorator factory
+
+```python
+import time
+
+DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
+
+def clock(fmt=DEFAULT_FMT):
+    def decorate(func):
+        def clocked(*_args):
+            t0 = time.time()
+            _result = func(*_args)
+            elapsed = time.time() - t0
+            name = func.__name__
+            args = ', '.join(repr(arg) for arg in _args)
+            result = repr(_result)
+            print(fmt.format(**locals()))
+            return _result
+        return clocked
+    return decorate
+
+@clock()
+def snoonze(seconds):
+    time.sleep(seconds)
+    
+for i in range(3):
+    snoonze(.123)
+
+```
 
 
 # 4. Shell
