@@ -16,11 +16,11 @@
   - [3.5. Get abs path of package](#35-get-abs-path-of-package)
   - [3.6. Dingding Robot with requests](#36-dingding-robot-with-requests)
   - [3.7. Decorator factory](#37-decorator-factory)
+  - [3.8. Built-in Exceptions](#38-built-in-exceptions)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
   - [4.3. shebang usage in python](#43-shebang-usage-in-python)
-  - [4.4. Built-in Exceptions](#44-built-in-exceptions)
 - [5. Meteorology](#5-meteorology)
   - [5.1. Turn grib2 to nc with wgrib2](#51-turn-grib2-to-nc-with-wgrib2)
   - [5.2. Get wind direction name in Chinese](#52-get-wind-direction-name-in-chinese)
@@ -494,51 +494,7 @@ for i in range(3):
 
 ```
 
-
-# 4. Shell
-
-## 4.1. Create list with fixed digits
-
-```shell
-#!/bin/bash
-
-for i in `seq 0 1 24`
-do
-    echo `printf "%03d" "$i"`
-done
-```
-
-## 4.2. lrzsz install
-
-```shell
-# If you don't have sudo permission, you cann't "yum -y install epel-release".
-# epel include tools: screen, lrzsz, tree, locate, and htop.
-# Then, this is what you need.
-
-# 1 get the lrzsz.taz.gz file.
-# from "http://freshmeat.sourceforge.net/projects/lrzsz/" or other sources.
-tar -zxvf lrzsz-0.12.20.tar.gz
-cd lrzsz-0.12.20
-./configure --prefix=/your/path/lrzsz
-make && make install
-
-# 2 Don't forget to add lrzsz path to PATH.
-vi ~/.bashrc
-# add the following code to it.
-export PATH="/your/path/lrzsz/bin":$PATH
-alias rz="lrz"
-alias sz="lsz"
-```
-
-## 4.3. shebang usage in python
-
-"shebang" has two kinds of usages.  
-First,  
-`#!/usr/bin/python3`  # use this interpreter  
-Second,  
-`#!/usr/bin/env python3` # use the first found python3 interpreter  
-
-## 4.4. Built-in Exceptions
+## 3.8. Built-in Exceptions
 
 ```python
 BaseException
@@ -606,6 +562,51 @@ BaseException
            +-- BytesWarning
            +-- ResourceWarning
 ```
+
+
+# 4. Shell
+
+## 4.1. Create list with fixed digits
+
+```shell
+#!/bin/bash
+
+for i in `seq 0 1 24`
+do
+    echo `printf "%03d" "$i"`
+done
+```
+
+## 4.2. lrzsz install
+
+```shell
+# If you don't have sudo permission, you cann't "yum -y install epel-release".
+# epel include tools: screen, lrzsz, tree, locate, and htop.
+# Then, this is what you need.
+
+# 1 get the lrzsz.taz.gz file.
+# from "http://freshmeat.sourceforge.net/projects/lrzsz/" or other sources.
+tar -zxvf lrzsz-0.12.20.tar.gz
+cd lrzsz-0.12.20
+./configure --prefix=/your/path/lrzsz
+make && make install
+
+# 2 Don't forget to add lrzsz path to PATH.
+vi ~/.bashrc
+# add the following code to it.
+export PATH="/your/path/lrzsz/bin":$PATH
+alias rz="lrz"
+alias sz="lsz"
+```
+
+## 4.3. shebang usage in python
+
+"shebang" has two kinds of usages.  
+First,  
+`#!/usr/bin/python3`  # use this interpreter  
+Second,  
+`#!/usr/bin/env python3` # use the first found python3 interpreter  
+
 
 
 # 5. Meteorology
