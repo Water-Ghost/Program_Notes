@@ -17,6 +17,7 @@
   - [3.6. Dingding Robot with requests](#36-dingding-robot-with-requests)
   - [3.7. Decorator factory](#37-decorator-factory)
   - [3.8. Built-in Exceptions](#38-built-in-exceptions)
+  - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
 - [4. Shell](#4-shell)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -564,6 +565,13 @@ BaseException
 ```
 
 
+## 3.9. FastAPI 运行不报错，但是有问题解决方法
+
+```python
+MissingBackendError: bcrypt: no backends available -- recommend you install one (e.g. 'pip install bcrypt')
+```
+
+
 # 4. Shell
 
 ## 4.1. Create list with fixed digits
@@ -659,6 +667,7 @@ def get_wind_direction(degree):
 
 
 ```
+
 
 # 6. DataBase
 
