@@ -18,10 +18,11 @@
   - [3.7. Decorator factory](#37-decorator-factory)
   - [3.8. Built-in Exceptions](#38-built-in-exceptions)
   - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
-- [4. Shell](#4-shell)
+- [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
   - [4.3. shebang usage in python](#43-shebang-usage-in-python)
+  - [4.4. killall](#44-killall)
 - [5. Meteorology](#5-meteorology)
   - [5.1. Turn grib2 to nc with wgrib2](#51-turn-grib2-to-nc-with-wgrib2)
   - [5.2. Get wind direction name in Chinese](#52-get-wind-direction-name-in-chinese)
@@ -572,7 +573,7 @@ MissingBackendError: bcrypt: no backends available -- recommend you install one 
 ```
 
 
-# 4. Shell
+# 4. Linux
 
 ## 4.1. Create list with fixed digits
 
@@ -615,6 +616,9 @@ First,
 Second,  
 `#!/usr/bin/env python3` # use the first found python3 interpreter  
 
+## 4.4. killall
+
+killall - kill processes by name
 
 
 # 5. Meteorology
