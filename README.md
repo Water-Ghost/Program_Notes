@@ -18,6 +18,7 @@
   - [3.7. Decorator factory](#37-decorator-factory)
   - [3.8. Built-in Exceptions](#38-built-in-exceptions)
   - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
+  - [3.10. Pandas sort_values with specified orders](#310-pandas-sort_values-with-specified-orders)
 - [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -37,6 +38,8 @@
   - [8.1. CMD](#81-cmd)
 - [9. Javascript](#9-javascript)
   - [9.1. Xpath](#91-xpath)
+- [10. Django](#10-django)
+  - [10.1. pymysql](#101-pymysql)
 
 # 3. Python
 
@@ -572,6 +575,31 @@ BaseException
 MissingBackendError: bcrypt: no backends available -- recommend you install one (e.g. 'pip install bcrypt')
 ```
 
+## 3.10. Pandas sort_values with specified orders
+
+```python
+from pandas.api.types import CategoricalDtype
+
+df = pd.DataFrame({
+    'cloth_id': [1001, 1002, 1003, 1004, 1005, 1006],
+    'size': ['S', 'XL', 'M', 'XS', 'L', 'S'],
+    })
+
+cat_size_order = CategoricalDtype(
+    ['XS', 'S', 'M', 'L', 'XL'], 
+    ordered=True
+    )
+df['size'] = df['size'].astype(cat_size_order)
+df
+>>>
+   cloth_id size
+0      1001    S
+1      1002   XL
+2      1003    M
+3      1004   XS
+4      1005    L
+5      1006    S
+```
 
 # 4. Linux
 
@@ -888,3 +916,17 @@ airflow backfill tutorial -s 2015-06-01 -e 2015-06-07
 - 星号（*）匹配任意字符或节点，可以在不同条件下使用
   - //table/tr/* 选择所有表格行tr标签的所有子节点
   - //div[@*] 选择带任意属性的所有div标签
+
+
+# 10. Django
+
+## 10.1. pymysql
+
+> Error:  
+> django.core.exceptions.ImproperlyConfigured: mysqlclient 1.4.0 or newer is required; you have 0.10.1.
+
+```python
+import pymysql
+pymysql.version_info = (1, 4, 6, 'final', 0)
+pymysql.install_as_MySQLdb()
+```
