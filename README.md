@@ -24,6 +24,7 @@
   - [4.2. lrzsz install](#42-lrzsz-install)
   - [4.3. shebang usage in python](#43-shebang-usage-in-python)
   - [4.4. killall](#44-killall)
+  - [4.5. screen](#45-screen)
 - [5. Meteorology](#5-meteorology)
   - [5.1. Turn grib2 to nc with wgrib2](#51-turn-grib2-to-nc-with-wgrib2)
   - [5.2. Get wind direction name in Chinese](#52-get-wind-direction-name-in-chinese)
@@ -316,7 +317,7 @@ test7()
 
 - test.py
 
-```
+```python
 print("This is test")
 
 ```
@@ -646,7 +647,26 @@ Second,
 
 ## 4.4. killall
 
+```bash
 killall - kill processes by name
+```
+
+## 4.5. screen
+
+```bash
+# 创建会话（-m 强制）
+$ screen -dmS session_name
+
+# 关闭会话
+$ screen -X -S [session_name] quit
+
+# 查看所有会话
+$ screen -ls
+
+# 进入会话
+$ screen -r session_name
+
+```
 
 
 # 5. Meteorology
