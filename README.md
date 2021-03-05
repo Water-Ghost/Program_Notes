@@ -748,28 +748,28 @@ $ .headers on
 ## 7.1. tldr docker
 
 - List currently running docker containers:
-    - `docker ps`
+  - `docker ps`
 
 - List all docker containers (running and stopped):
-    - `docker ps -a`
+  - `docker ps -a`
 
 - Start a container from an image, with a custom name:
-    - `docker run --name container_name image`
+  - `docker run --name container_name image`
 
 - Start or stop an existing container:
-    - `docker start|stop container_name`
+  - `docker start|stop container_name`
 
 - Pull an image from a docker registry:
-    - `docker pull image`
+  - `docker pull image`
 
 - Open a shell inside of an already running container:
-    - `docker exec -it container_name sh`
+  - `docker exec -it container_name sh`
 
 - Remove a stopped container:
-    - `docker rm container_name`
+  - `docker rm container_name`
 
 - Fetch and follow the logs of a container:
-    - `docker logs -f container_name`
+  - `docker logs -f container_name`
 
 
 ## 7.2. Common cmd
