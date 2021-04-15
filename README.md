@@ -616,12 +616,16 @@ csv_file = '/you/file/folder/test.csv'
 new_file = '/you/file/folder/new.csv'
 
 with open(csv_file, 'rb') as f:
-    csv = f.read().replace('\x00'.encode(), ''.encode()).decode()  # .decode('gbk')
+    csv = f.read().replace('\x00'.encode(), ''.encode()).decode()  # .decode('gb18030')
     with open(new_file, 'w') as f:
         f.write(csv)
 
-```
+# If you don't want to save file, you can simply use io.BytesIO.
+with open(path, 'rb') as f:
+    csv_byte = f.read().replace('\x00'.encode(), ''.encode())
+    df = pd.read_csv(BytesIO(csv_byte), skiprows=4, encoding='gb18030')
 
+```
 
 # 4. Linux
 
