@@ -19,6 +19,7 @@
   - [3.8. Built-in Exceptions](#38-built-in-exceptions)
   - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
   - [3.10. Pandas sort_values with specified orders](#310-pandas-sort_values-with-specified-orders)
+  - [3.11. pandas.read_csv with null byte](#311-pandasread_csv-with-null-byte)
 - [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -601,6 +602,26 @@ df
 4      1005    L
 5      1006    S
 ```
+
+## 3.11. pandas.read_csv with null byte
+
+What you need is to replace b'\x00' with b''.
+
+```python
+
+import pandas as pd
+
+
+csv_file = '/you/file/folder/test.csv'
+new_file = '/you/file/folder/new.csv'
+
+with open(csv_file, 'rb') as f:
+    csv = f.read().replace('\x00'.encode(), ''.encode()).decode()  # .decode('gbk')
+    with open(new_file, 'w') as f:
+        f.write(csv)
+
+```
+
 
 # 4. Linux
 
