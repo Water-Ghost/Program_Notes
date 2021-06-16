@@ -20,6 +20,7 @@
   - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
   - [3.10. Pandas sort_values with specified orders](#310-pandas-sort_values-with-specified-orders)
   - [3.11. pandas.read_csv with null byte](#311-pandasread_csv-with-null-byte)
+  - [3.12. oracle](#312-oracle)
 - [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -624,6 +625,16 @@ with open(csv_file, 'rb') as f:
 with open(path, 'rb') as f:
     csv_byte = f.read().replace('\x00'.encode(), ''.encode())
     df = pd.read_csv(BytesIO(csv_byte), skiprows=4, encoding='gb18030')
+
+```
+
+## 3.12. oracle
+
+```python
+import cx_Oracle
+
+cx_Oracle.init_oracle_client(lib_dir='/clint/path/instantclient_19_8')
+engine = create_engine('oracle+cx_oracle://user:pasword@ip:port/instancename')
 
 ```
 
