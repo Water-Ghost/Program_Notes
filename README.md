@@ -43,6 +43,7 @@
   - [9.1. Xpath](#91-xpath)
 - [10. Django](#10-django)
   - [10.1. pymysql](#101-pymysql)
+- [11. MySQL](#11-mysql)
 
 # 3. Python
 
@@ -986,3 +987,7 @@ import pymysql
 pymysql.version_info = (1, 4, 6, 'final', 0)
 pymysql.install_as_MySQLdb()
 ```
+
+# 11. MySQL
+
+见[mysql.md](mysql/mysql.md)
