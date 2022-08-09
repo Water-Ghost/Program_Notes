@@ -641,6 +641,8 @@ engine = create_engine('oracle+cx_oracle://user:pasword@ip:port/instancename')
 ```
 ## 3.13. Multi log files with loguru 
 
+[loguru documentation](https://loguru.readthedocs.io/en/stable/index.html)
+
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
