@@ -21,6 +21,7 @@
   - [3.10. Pandas sort_values with specified orders](#310-pandas-sort_values-with-specified-orders)
   - [3.11. pandas.read_csv with null byte](#311-pandasread_csv-with-null-byte)
   - [3.12. oracle](#312-oracle)
+  - [3.13. Multi log files with loguru](#313-multi-log-files-with-loguru)
 - [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -636,6 +637,39 @@ import cx_Oracle
 
 cx_Oracle.init_oracle_client(lib_dir='/clint/path/instantclient_19_8')
 engine = create_engine('oracle+cx_oracle://user:pasword@ip:port/instancename')
+
+```
+## 3.13. Multi log files with loguru 
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+import sys
+from pathlib import Path
+
+from loguru import logger
+
+here = Path(__file__).parent
+
+# 1 Write log to file based on content in message
+logger.add('normal.log', filter=lambda x: '[normal]' in x['message'],
+           retention="10 days", rotation="12:00", level="DEBUG")
+logger.add('error.log', filter=lambda x: '[error]' in x['message'],
+           retention="10 days", rotation="12:00", level="DEBUG")
+# 2 Write all log to file
+logger.add('all.log', retention="10 days", rotation="12:00", level="DEBUG")
+# 3 Write to file, based on level
+logger.add('warning.log', filter=lambda x: 'WARNING' in x['level'].name)
+
+
+if __name__ == '__main__':
+    logger.info('[normal] this is a normal')
+    logger.error('[error] this is an error')
+    logger.info('[all] this is')
+    logger.warning('[warning] this is')
+    logger.warning('test')
+
 
 ```
 
