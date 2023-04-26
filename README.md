@@ -8,7 +8,7 @@
   - [3.1. Self-define colormap](#31-self-define-colormap)
   - [3.2. Clip data with shp, and save it to npz](#32-clip-data-with-shp-and-save-it-to-npz)
   - [3.3. Get all files of a folder with os.walk](#33-get-all-files-of-a-folder-with-oswalk)
-  - [3.4. Tests with pkgutils.get_data()](#34-tests-with-pkgutilsget_data)
+  - [3.4. Tests with pkgutils.get\_data()](#34-tests-with-pkgutilsget_data)
     - [3.4.1. Package](#341-package)
     - [3.4.2. Codes](#342-codes)
     - [3.4.3. Output](#343-output)
@@ -18,10 +18,11 @@
   - [3.7. Decorator factory](#37-decorator-factory)
   - [3.8. Built-in Exceptions](#38-built-in-exceptions)
   - [3.9. FastAPI 运行不报错，但是有问题解决方法](#39-fastapi-运行不报错但是有问题解决方法)
-  - [3.10. Pandas sort_values with specified orders](#310-pandas-sort_values-with-specified-orders)
-  - [3.11. pandas.read_csv with null byte](#311-pandasread_csv-with-null-byte)
+  - [3.10. Pandas sort\_values with specified orders](#310-pandas-sort_values-with-specified-orders)
+  - [3.11. pandas.read\_csv with null byte](#311-pandasread_csv-with-null-byte)
   - [3.12. oracle](#312-oracle)
   - [3.13. Multi log files with loguru](#313-multi-log-files-with-loguru)
+  - [3.14. pygrib显示grib中的变量名](#314-pygrib显示grib中的变量名)
 - [4. Linux](#4-linux)
   - [4.1. Create list with fixed digits](#41-create-list-with-fixed-digits)
   - [4.2. lrzsz install](#42-lrzsz-install)
@@ -673,6 +674,21 @@ if __name__ == '__main__':
     logger.warning('test')
 
 
+```
+
+## 3.14. pygrib显示grib中的变量名
+
+```python
+import pygrib
+
+file = '<your/grib/file>'
+grbs = pygrib.open(file)
+# 写入变量到1.txt
+with open('1.txt', 'w') as f:
+    grbs.seek(0)
+    for grb in grbs:
+        print(grb.__repr__())
+        f.write(f"{grb.__repr__()}\n")
 ```
 
 # 4. Linux
